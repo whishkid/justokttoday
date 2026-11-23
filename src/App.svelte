@@ -2,14 +2,21 @@
 	import { slide} from 'svelte/transition'
 
 	let result='';
+	let failed = false;
 	let showbuttons = true;
+	let website = '';
 	$:showresult = result;
 
 
 	async function saveOkOrNot(isok) {
-	var res = await fetch ("/sendok.ashx?isok=" + isok);
-	result = await res.text();
-	document.getElementById("container");
+	try {
+		var res = await fetch ("/sendok.ashx", { method: "POST", body: new URLSearchParams({ isok: isok, website: website }) });
+		result = await res.text();
+		failed = !res.ok;
+	} catch (e) {
+		result = "Versturen mislukt, controleer de verbinding en probeer het opnieuw.";
+		failed = true;
+	}
 	getlastinfo();
 	}
 
@@ -62,16 +69,35 @@
 	  border:1px solid grey;
 
   }
+
+  .error {
+	  color: red;
+	  font-weight: bold;
+  }
+
+  .hp {
+	  position: absolute;
+	  left: -10000px;
+	  width: 1px;
+	  height: 1px;
+	  overflow: hidden;
+  }
 </style>
 
 <main>
+	<div class="hp" aria-hidden="true">
+		<label>Laat dit veld leeg <input type="text" name="website" tabindex="-1" autocomplete="off" bind:value={website}></label>
+	</div>
 	{#if showbuttons}
 	<div transition:slide>
   <button on:click={ok} class="ok">OK</button>
   <button on:click={notok} class="notok">NOT OK</button>
 	</div>
+	{#if failed}
+  <div class="result error">{showresult}</div>
+	{/if}
 	{:else}
-  <div class="result"  >{showresult}</div>
+  <div class="result" class:error={failed}>{showresult}</div>
 	{/if}
 
 	Laatste OK meldingen:<br/>
