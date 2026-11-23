@@ -1,0 +1,50 @@
+name: Deploy to IIS
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-live
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, windows, justok]
+    timeout-minutes: 15
+    env:
+      LIVE_DIR: D:\websites\JustOkToday
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build bundle
+        shell: cmd
+        run: |
+          call npm ci --no-audit --no-fund || exit /b 1
+          node node_modules\rollup\dist\bin\rollup -c || exit /b 1
+
+      - name: Update live folder
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          # Live folder and runner checkout are owned by different accounts
+          function G { & git -c "safe.directory=*" -C $env:LIVE_DIR @args; if ($LASTEXITCODE -ne 0) { throw "git $args failed" } }
+
+          # Refuse to overwrite edits made directly on the server
+          $dirty = G status --porcelain --untracked-files=no
+          if ($dirty) { throw "Live folder has uncommitted changes, not deploying:`n$dirty" }
+
+          # Fetch from this runner's checkout, so the live folder needs no GitHub credentials
+          G fetch --quiet "$env:GITHUB_WORKSPACE" "+HEAD:refs/remotes/origin/main"
+          G merge --ff-only origin/main
+          Copy-Item "$env:GITHUB_WORKSPACE\public\build\*" "$env:LIVE_DIR\public\build\" -Force
+          G log --oneline -1
+
+      - name: Smoke test
+        shell: powershell
+        run: |
+          $r = Invoke-WebRequest -UseBasicParsing https://ok.w22.nl/
+          if ($r.StatusCode -ne 200 -or $r.Content -notmatch 'bundle\.js') { throw "Homepage check failed" }
