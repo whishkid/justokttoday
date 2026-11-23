@@ -13,7 +13,8 @@ public class SetOk : IHttpHandler
         db.InitCommand();
         var isOk  = Convert.ToBoolean(context.Request.QueryString["IsOk"]);
         db.AddParam("@isok",isOk);
-        db.ExecuteNonQueryParams("Insert into Status (isok, datetime) values(@isok, getdate())");
+        db.AddParam("@ip", context.Request.UserHostAddress ?? "");
+        db.ExecuteNonQueryParams("Insert into Status (isok, datetime, ip) values(@isok, getdate(), @ip)");
 
         
        if(isOk) {

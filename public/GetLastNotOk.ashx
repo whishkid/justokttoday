@@ -13,13 +13,13 @@ public class GetLastNotOk : IHttpHandler
         db.InitCommand();
         var isOk  = Convert.ToBoolean(context.Request.QueryString["IsOk"]);
         db.AddParam("@isok",isOk);
-        var dt  = db.FillNewDataTable("select top 6 datetime from status where isok=0 order by  datetime desc");
+        var dt  = db.FillNewDataTable("select top 6 datetime, ip from status where isok=0 order by  datetime desc");
 
         string ret = "";
         foreach(System.Data.DataRow dr in dt.Rows)
         {
              var dte = Convert.ToDateTime(dr["datetime"]);
-            ret += dte.ToShortDateString() +" " + dte.ToShortTimeString() + "<br/>\r\n";
+            ret += dte.ToShortDateString() +" " + dte.ToShortTimeString() + " - " + HttpUtility.HtmlEncode(Convert.ToString(dr["ip"])) + "<br/>\r\n";
         }
         context.Response.Write(ret);
     }
