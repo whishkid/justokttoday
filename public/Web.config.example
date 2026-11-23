@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit 
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <appSettings>
+    <add key="developmentmode" value="true" />
+    <add key="MollieApiKey_nl_test" value="YOUR_MOLLIE_NL_TEST_KEY" />
+    <add key="MollieApiKey_nl_live" value="YOUR_MOLLIE_NL_LIVE_KEY" />
+    <add key="MollieApiKey_com_test" value="YOUR_MOLLIE_COM_TEST_KEY" />
+    <add key="MollieApiKey_com_live" value="YOUR_MOLLIE_COM_LIVE_KEY" />
+    <add key="MessageBirdUsername" value="YOUR_MESSAGEBIRD_USERNAME" />
+    <add key="MessageBirdPassword" value="YOUR_MESSAGEBIRD_PASSWORD" />
+    <add key="FacebookAppID" value="YOUR_FACEBOOK_APP_ID" />
+    <add key="FacebookAppSecret" value="YOUR_FACEBOOK_APP_SECRET" />
+    <add key="OrderCancelableWithinDays" value="60" /> 
+    <add key="showActieBanner" value="true" />
+    <add key="DutchSpeakingCountryIds" value=",1,2," />
+    <add key="ShowDouaneKostenTextCountryIds" value=",26," />
+  </appSettings>
+  <connectionStrings>
+    <add name="connstring" connectionString="Data Source=localhost;Initial Catalog=JustOkToday;User ID=YOUR_DB_USER;Password=YOUR_DB_PASSWORD;" providerName="System.Data.SqlClient" />
+  </connectionStrings>
+  <system.net>
+    <mailSettings>
+      <smtp>
+        <network host="smtp.mailgun.org" password="YOUR_SMTP_PASSWORD" userName="YOUR_SMTP_USERNAME" />
+      </smtp>
+    </mailSettings>
+  </system.net>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true" />
+    <validation validateIntegratedModeConfiguration="false" />
+    <httpProtocol />
+    <handlers>
+      <add name="All_64" path="*" verb="*" modules="IsapiModule" scriptProcessor="c:\windows\Microsoft.NET\Framework64\v4.0.30319\aspnet_isapi.dll" resourceType="Unspecified" requireAccess="None" preCondition="classicMode,runtimeVersionv4.0,bitness64" />
+      <add name="All_32" path="*" verb="*" modules="IsapiModule" scriptProcessor="c:\windows\Microsoft.NET\Framework\v4.0.30319\aspnet_isapi.dll" resourceType="Unspecified" requireAccess="None" preCondition="classicMode,runtimeVersionv4.0,bitness32" />
+      <!--<add name="ASP.NET-ISAPI-2.0-Wildcard"
+           path="*.jpg" verb="GET,HEAD,POST,DEBUG"
+           modules="IsapiModule" 
+           scriptProcessor="%windir%\Microsoft.NET\Framework\v2.0.50727\aspnet_isapi.dll"
+           preCondition="classicMode,runtimeVersionv2.0,bitness32" responseBufferLimit="0" /> 
+        <add name="StaticFile2"
+           path="*.jpg" verb="*" modules="StaticFileModule,DefaultDocumentModule,DirectoryListingModule"
+           resourceType="Either" requireAccess="Read" />-->
+    </handlers>
+  </system.webServer>
+  <!--
+    For a description of web.config changes see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.7" />
+      </system.Web>
+  -->
+  <system.web>
+    <httpRuntime maxRequestLength="1048576" />
+    <globalization uiCulture="nl" culture="nl-NL" />
+    <webServices>
+      <protocols>
+        <add name="HttpGet" />
+        <add name="HttpPost" />
+      </protocols>
+    </webServices>
+ 
+    <pages enableViewState="false" enableEventValidation="false" controlRenderingCompatibilityVersion="4.0" />
+    <compilation debug="true" targetFramework="4.5">
+      <assemblies>
+        <add assembly="Microsoft.JScript, Version=10.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+        <add assembly="System.Net.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A" />
+        <add assembly="System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+      </assemblies>
+    </compilation>
+    <customErrors mode="Off" defaultRedirect="/404.aspx">
+      <error statusCode="404" redirect="/404.aspx" />
+    </customErrors>
+    <authentication mode="Forms">
+      <forms name=".ALLINAUTH" loginUrl="/inloggen" />
+    </authentication>
+    <authorization>
+      <allow users="*" />
+    </authorization>
+  </system.web>
+  <system.webServer>
+    <staticContent>
+      <remove fileExtension=".woff2" />
+      <mimeMap fileExtension=".woff2" mimeType="font/woff2" />
+            <mimeMap fileExtension=".plist" mimeType="text/xml" />
+            <mimeMap fileExtension=".ipa" mimeType="application/octet-stream" />
+    </staticContent>
+  </system.webServer>
+  <system.web.extensions>
+    <scripting>
+      <webServices>
+        <jsonSerialization maxJsonLength="50000000" />
+      </webServices>
+    </scripting>
+  </system.web.extensions>
+  <location path="js">
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlCustom="public" cacheControlMode="UseMaxAge" cacheControlMaxAge="1.00:00:00" />
+      </staticContent>
+    </system.webServer>
+  </location>
+  <location path="css">
+    <system.webServer>
+      <staticContent>
+        <clientCache cacheControlCustom="public" cacheControlMode="UseMaxAge" cacheControlMaxAge="1.00:00:00" />
+      </staticContent>
+    </system.webServer>
+  </location>
+</configuration>

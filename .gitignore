@@ -1,0 +1,10 @@
+/node_modules/
+/public/build/
+.vs/
+
+# Contains API keys, DB and SMTP credentials - use Web.config.example as template
+/public/Web.config
+# Unrelated leftover config with credentials
+/public/Bin/GettingStartedWithWebServices.dll.config
+
+.DS_Store

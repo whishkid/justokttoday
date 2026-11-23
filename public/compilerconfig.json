@@ -1,0 +1,19 @@
+﻿[
+  {
+    "outputFile": "css/bootstrap/bootstrap.css",
+    "inputFile": "scss/bootstrap-4.4.1/bootstrap.scss"
+  },
+  {
+    "outputFile": "css/bootstrap/bootstrap-grid.css",
+    "inputFile": "scss/bootstrap-4.4.1/bootstrap-grid.scss"
+  },
+  {
+    "outputFile": "css/bootstrap/bootstrap-reboot.css",
+    "inputFile": "scss/bootstrap-4.4.1/bootstrap-reboot.scss"
+  },  
+  {
+    "outputFile": "css/play.css",
+    "inputFile": "scss/play.scss"
+  } 
+]
+

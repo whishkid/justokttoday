@@ -1,0 +1,89 @@
+<html>
+<script>
+
+var i=-1;
+var urls=[
+'https://www.made.com/nl/sweep-staande-booglamp-mat-wit-en-koper-3',
+'https://www.lampen24.nl/boogvloerlamp-esti-met-stoffen-kap-zwart-goud-165800-nl-nl.html',
+'https://www.made.com/nl/jacy-staande-lamp-zwart-en-koper-2',
+
+'https://www.lampen24.nl/lindby-somana-vloerlamp-cilindrisch-183637-nl-nl.html',
+'https://www.lampen24.nl/zwarte-booglamp-viskan-met-stoffen-kap-152960-nl-nl.html',
+'https://www.made.com/nl/albert-staande-lamp-witgroen-zachtgrijs-en-parelmoernachtblauw',
+'https://www.lampen24.nl/by-rydens-foggy-vloerlamp-met-drie-kappen-149332-nl-nl.html',
+'https://www.bol.com/nl/p/good-mojo-himalaya-staande-lamp-donker-linnen/9200000082192115/?referrer=socialshare_pdp_iphoneapp',
+'https://www.made.com/nl/style-files-calisto-lampenkap-metallic',
+'https://www.made.com/nl/albert-tafellamp-witgroen',
+'https://www.made.com/nl/asher-staande-lamp-natuurlijk-essenhout',
+'https://www.made.com/nl/albert-eettafel-hanglamp-witgroen-zachtgrijs-en-avondblauw',
+'https://www.made.com/nl/irvin-staande-lamp-grijsbruin-en-natuurlijk-hout'
+
+
+
+]
+
+var afvallerUrls = [
+
+'https://www.made.com/nl/sveinn-staande-lamp-van-hout-wit-en-hout',
+'https://www.made.com/nl/kyle-staande-booglamp-grijs',
+'https://www.made.com/nl/kyle-tafellamp-gris',
+'https://www.made.com/nl/elina-led-wandlamp-en-plank-grijs-en-rubberhout',
+'https://www.made.com/nl/teo-staande-lamp-antiek-messing-en-wit',
+'https://www.made.com/nl/sveinn-staande-lamp-van-hout-wit-en-hout',
+'https://www.made.com/nl/carmella-staande-lamp-pauwblauw-en-messing',
+'https://www.made.com/nl/carmella-staande-lamp-messing-en-marmer',
+'https://www.made.com/nl/albert-staande-booglamp-zachtgrijs',
+'https://www.bol.com/nl/p/kave-home-vloerlamp-esther/9300000000393846/?referrer=socialshare_pdp_iphoneapp',
+'https://www.lampen24.nl/vloerlamp-sigurd-met-stoffen-lampenkap-160799-nl-nl.html',
+'https://www.made.com/nl/ira-staande-lamp-harrier-grijs']
+
+var winref=null;
+function doit(){
+i++;
+if(i>=urls.length) {i=-1;winref.close();winref=null; return};
+if(winref==null){
+    winref = window.open(urls[i],'_blank')
+}
+else
+{
+    winref.location.href=urls[i]
+}
+window.setTimeout(()=>{doit()},5000)
+}
+
+
+function doitAfvallers(){
+i++;
+if(i>=afvallerUrls.length)   {i=-1;winref.close();winref=null; return};
+if(winref==null){
+    winref = window.open(afvallerUrls[i],'_blank')
+}
+else
+{
+    winref.location.href=afvallerUrls[i]
+}
+window.setTimeout(()=>{doitAfvallers()},5000)
+}
+</script>
+<div style="font-size:64px;margin-left:40px;margin-top:20px">
+<span id=count ></span> lampen<br><br>
+<a  onclick="doit()" style="display:block;background-color: green;color:white; width:200px; text-align: center; border:1px solid darkgreen;">start</a>
+</div>
+
+<br>
+<div style="font-size:64px;margin-left:40px;margin-top:20px">
+  <span id=countAfvallers ></span>  lampen afvallers<br><br>
+  <a  onclick="doitAfvallers()" style="display:block;background-color: green;color:white; width:200px; text-align: center; border:1px solid darkgreen;">start</a>
+  </div>
+  
+
+
+<script>
+
+var x = document.getElementById('count')
+x.innerHTML=urls.length
+x = document.getElementById('countAfvallers')
+x.innerHTML=afvallerUrls.length
+
+</script>
+</html>
