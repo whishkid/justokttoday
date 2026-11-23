@@ -84,7 +84,7 @@
   }
 </style>
 
-<main> 
+<main>
 	<div class="hp" aria-hidden="true">
 		<label>Laat dit veld leeg <input type="text" name="website" tabindex="-1" autocomplete="off" bind:value={website}></label>
 	</div>
@@ -99,13 +99,12 @@
 	{:else}
   <div class="result" class:error={failed}>{showresult}</div>
 	{/if}
-<div style="background-color: blueviolet;">
+
 	Laatste OK meldingen:<br/>
 	{@html laatsteokmeldingen}
 <br/>
 <br/>
 	Laatste NO OK meldingen:<br/>
 	{@html  nietokmeldingen}
-</div>
 </main>
  
